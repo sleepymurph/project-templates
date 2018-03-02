@@ -42,8 +42,30 @@ def parse_args():
 class ThreadingHttpServer(http.server.HTTPServer, socketserver.ThreadingMixIn):
     pass
 
+
 class HttpRequestHandler(http.server.BaseHTTPRequestHandler):
-    pass
+
+    def send_whole_response(self, code, content, content_type=None):
+
+        if isinstance(content, str):
+            content = content.encode("utf-8")
+            if not content_type:
+                content_type = "text/plain"
+            if content_type.startswith("text/"):
+                content_type += "; charset=utf-8"
+
+        self.send_response(code)
+        self.send_header('Content-type', content_type)
+        self.send_header('Content-length',len(content))
+        self.end_headers()
+        self.wfile.write(content)
+
+    def do_GET(self):
+        if self.path == "/":
+            self.send_whole_response(200, "Hello, world!")
+            return
+
+        self.send_whole_response(404, "Unknown path: " + self.path)
 
 
 def run_http_server(args):
