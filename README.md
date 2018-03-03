@@ -154,6 +154,49 @@ There may be a few more Europe-friendly tweaks to my styles.
 For example, I set the `biblatex` package to print dates like "Apr. 7, 2017"
 instead of the "04/07/2017" to avoid any possible confusion over MDY vs DMY.
 
+### Graphviz Diagrams
+
+I love Graphviz.
+I use it for all kinds of diagrams and visualizations.
+So I have it built into the document build process here.
+
+To use Graphviz:
+
+1. Add dot files in this directory
+
+2. Add the dot file name to the `DOT_DIAGRAMS` variable in the Makefile,
+    with a PDF extension
+
+        # To include a diagram generated from diagram_example.dot
+        DOT_DIAGRAMS=diagram_example.pdf
+
+3. Create a figure in the document
+
+### M4 preprocessing for Graphviz diagrams
+
+The build process runs the diagrams through the `m4` preprocessor first,
+then through `dot`.
+This lets you use macros in your Graphviz files to define common styles
+and other shortcuts.
+
+For example, this macro defines `TENTATIVE` as a shortcut for `style="dashed'`
+to create a reusable link style:
+
+
+    define(TENTATIVE, `style="dashed"')
+
+    digraph{
+        hello -> world [TENTATIVE]
+        world -> "!" [TENTATIVE]
+    }
+
+This layer of indirection can make debugging tricky.
+So the intermediate build step is explicit.
+The result of M4 expansion will be written to a file with a
+`.preprocessed.dot` extension.
+This file can be checked for syntax errors and unexpected macro trouble.
+
+
 ### Git Info
 
 I give draft after draft to collaborators for feedback.

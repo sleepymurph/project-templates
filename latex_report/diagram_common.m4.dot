@@ -1,0 +1,4 @@
+// dot files are preprocessed with M4
+// So you can define common macros here to use in all diagrams
+
+define(TENTATIVE, `style="dashed"')

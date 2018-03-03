@@ -1,3 +1,29 @@
 \section{Introduction}
 
 \towrite{Introduction}
+
+For an example Graphviz diagram, see
+\cref{diagram_example}%
+.
+The digram was generated from the source given in
+\cref{diagram_common,diagram_example_source}%
+.
+
+% Captions should go below graphics for images and diagrams.
+% HOWEVER they can go above graphs and listings, as a title.
+% For proper linking, always put the label AFTER the caption.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{diagram_example}
+    \caption{Example Graphviz (dot) diagram}
+    \label{diagram_example}
+\end{figure}
+
+\lstinputlisting[
+    caption={M4 Macros included in Graphviz code},
+    label=diagram_common,
+]{diagram_common.m4.dot}
+\lstinputlisting[
+    caption={Example Graphviz code},
+    label=diagram_example_source,
+]{diagram_example.dot}

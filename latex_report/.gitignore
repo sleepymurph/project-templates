@@ -28,6 +28,9 @@
 # Graphics
 *.preprocessed.dot
 
+# Listings
+*.lol
+
 # Generated version metadata
 doc-gen-meta.tex
 doc-git-log.txt

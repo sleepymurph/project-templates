@@ -1,22 +1,24 @@
 #======================================================================
-# Specific documents
+# Document-specific variables
 #
 
 # The built PDF will be copied to the parent directory with this name
 FINAL_NAME=latex_report.pdf
 
 # Graphviz: Files to include with each dot file
-DOT_INCLUDE=dia_common.m4.dot
+DOT_INCLUDE=diagram_common.m4.dot
+# Graphviz: Diagrams to build and include in document
+DOT_DIAGRAMS=diagram_example.pdf
 
 # Git: List of directories that should be included when listing the Git history
 DOC_SOURCE_DIRS=.
 
 
-default: ../$(FINAL_NAME)
-
 #======================================================================
-# Specific documents
+# The main document
 #
+
+default: ../$(FINAL_NAME)
 
 ../$(FINAL_NAME): \
     doc.pdf \
@@ -29,22 +31,13 @@ doc.pdf: \
     sources.bib \
     doc-gen-meta.tex \
     doc-git-log.txt \
+    $(DOT_DIAGRAMS) \
 
-
-#======================================================================
-# Generic LaTeX
-#
-
-%.pdf: *.tex sources.bib
-	pdflatex $*.tex
-	bibtex $*.aux
-	makeglossaries $*
-	pdflatex $*.tex
-	pdflatex $*.tex
-
-../%.pdf: %.pdf
-	cp $*.pdf ../$*.pdf
-
+	pdflatex doc.tex
+	bibtex doc.aux
+	makeglossaries doc
+	pdflatex doc.tex
+	pdflatex doc.tex
 
 
 #======================================================================
@@ -70,7 +63,7 @@ doc.pdf: \
 #
 # X.dot -> (m4) X.preprocessed.dot -> (dot) X.pdf OR X.png
 #
-# You can create a commin file of M4 macros to be used in all documents. Just
+# You can create a common file of M4 macros to be used in all documents. Just
 # add it to the DOT_INCLUDE variable.
 #
 # If a specific diagram needs to be processed with Neato or other Graphviz
@@ -86,9 +79,12 @@ doc.pdf: \
 %.png: %.preprocessed.dot
 	dot -Tpng -o $*.png $*.preprocessed.dot
 
+# Do not delete preprocessed so they can be inspected for debugging
+.PRECIOUS: %.preprocessed.dot
+
 
 #======================================================================
-# Document generation metadata
+# Document version info (Git)
 #
 
 GIT_HEAD=$(shell git rev-parse --show-toplevel)/.git/logs/HEAD
