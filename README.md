@@ -22,6 +22,31 @@ It took me a long time to put all of that together.
 So I wanted to save it somewhere where I could find it and reuse it when needed.
 
 
+Markdown Document For Printing
+==================================================
+
+Subdirectory: `markdown_doc_for_printing/`
+
+For quick printed documents like letters, I like to write in Markdown
+and convert to PDF with [Pandoc](https://pandoc.org/).
+
+Pandoc lets you put a YAML block at the beginning of the document with
+variables that affect the paper size, margins, PDF metadata, etc.
+I always forget what those options are, so I wanted to have a starter document
+that I could copy and edit at will.
+
+To use:
+
+1. Copy the document `doc.markdown`
+2. Edit it
+3. Convert to PDF with Pandoc: `pandoc doc.markdown -o doc.pdf`
+
+Give yourself a Vim macro:
+
+    :nmap <Buffer> <Leader>p :w \| :!pandoc -o %.pdf %<CR>
+
+
+
 LaTeX Report Template
 ==================================================
 
@@ -30,6 +55,8 @@ Subdirectory: `latex_report`
 This is a starter LaTeX report with a ton of customizations that I use
 consistently.
 
+This is for more serious documents where Markdown+Pandoc won't cut it.
+
 ## Basic Usage
 
 The build process is controlled by `make`. To build:
@@ -37,9 +64,10 @@ The build process is controlled by `make`. To build:
 1. `cd` into subdirectory
 2. run `make`
 
-This will create a `report_latex.pdf` document in the parent directory.
+This will create a `report_latex.pdf` document in the parent directory
+(root of the repository).
 
-To base a new document off of this one:
+To base a new document off of this skeleton:
 
 1. Copy the `report_latex` directory into your project and rename it
 2. Don't forget the hidden `.gitignore` file
