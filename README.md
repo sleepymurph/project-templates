@@ -59,6 +59,56 @@ So whatever paper size you use, you need to leave the `paper` part off of the
 Remembering exactly how to set this is probably the biggest reason I
 need this template.
 
+### Dependency: Open Sans
+
+[Open Sans](https://fonts.google.com/specimen/Open+Sans)
+is the official font at the university where I work.
+Therefore it is the default font for my templates.
+
+This means that this template requires the
+[`opensans` package for LaTeX](https://ctan.org/pkg/opensans).
+On Ubuntu this package is part of the
+[`texlive-fonts-extra` package](https://packages.ubuntu.com/xenial/texlive-fonts-extra).
+
+    apt install texlive-fonts-extra
+
+Or you can use a different font by editing the file.
+Edit or remove the `fontfamily` and `fontfamilyoptions`
+values in the YAML block.
+
+#### Trade-off: Open Sans vs full UTF-8 support
+
+This method of switching to Open Sans only works with the default `pdflatex` engine.
+And the `pdflatex` engine has impartial UTF-8 support.
+The Pandoc LaTeX template (and my LaTeX template) use the `inputenc` package for partial support.
+This works for most of my purposes, but it can still give errors like the following:
+
+```
+! Package inputenc Error: Unicode char А (U+410)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.66 ...YZŽabcčćdđefghijklmnopqrsštuvwxyzžА
+
+Try running pandoc with --latex-engine=xelatex.
+pandoc: Error producing PDF
+
+shell returned 43
+```
+
+If you switch to `xelatex` for better UTF-8 support,
+the document will no longer be in Open Sans:
+
+    pandoc doc.markdown -o doc.markdown.pdf --latex-engine=xelatex
+
+Apparently fonts work completely differently in XeLaTeX,
+and I have not had a chance to figure that out.
+
+TODO: Figure out how to get Open Sans with `xelatex` too.
+
 
 LaTeX Report Template
 ==================================================
@@ -128,6 +178,24 @@ This comes from collaboration.
 I want my collaborators to be able to look at the latest version of the
 document directly from the repository without having to set up the LaTeX build
 environment.
+
+### Dependency: Open Sans
+
+[Open Sans](https://fonts.google.com/specimen/Open+Sans)
+is the official font at the university where I work.
+Therefore it is the default font for my templates.
+
+This means that this template requires the
+[`opensans` package for LaTeX](https://ctan.org/pkg/opensans).
+On Ubuntu this package is part of the
+[`texlive-fonts-extra` package](https://packages.ubuntu.com/xenial/texlive-fonts-extra).
+
+    apt install texlive-fonts-extra
+
+Or you can use a different font by editing the `packages.tex` file.
+The font packages are near the top.
+
+
 
 ### The "final" option
 
