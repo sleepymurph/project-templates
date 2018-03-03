@@ -121,7 +121,8 @@ Build process and helpers:
 
 I keep my LaTeX sources in Git, naturally.
 I keep the document source in a subdirectory of the repository,
-and then I commit a rendered copy of the PDF in the top level of the repository.
+and then I commit a rendered copy of the PDF in the top level of the repository
+(see [`latex_report.pdf`](latex_report.pdf) in this repo).
 
 This comes from collaboration.
 I want my collaborators to be able to look at the latest version of the
