@@ -1,0 +1,33 @@
+# Standard TeX output
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.pdf
+
+# BibLaTeX output
+*-blx.bib
+*.run.xml
+
+# Todos
+*.tdo
+
+# Endfloat
+*.fff
+*.lof
+*.lot
+*.ttt
+
+# Glossaries
+*.glo
+*.ist
+*.glg
+*.gls
+
+# Graphics
+*.preprocessed.dot
+
+# Generated version metadata
+doc-gen-meta.tex
+doc-git-log.txt

@@ -1,0 +1,141 @@
+% File input
+\usepackage[utf8]{inputenc}
+
+% Fonts
+%
+% Times New Roman (text and math)
+\usepackage{mathptm}
+
+% Page layout
+
+% Adjust margins from the default.
+% About 4.3cm seems close to the default when you don't use geometry
+% \usepackage[margin=4.3cm]{geometry}
+
+
+% Let us check for draft/final conditions
+\usepackage{ifdraft}
+
+
+% Figures
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[margin=1cm,justification=centering]{caption}
+\usepackage{subcaption} % sub-figures
+
+\ifoptionfinal
+{
+}{
+\usepackage{endfloat}   % Move figures out of text for now
+}
+
+
+% Listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+
+% Numbers and units of measurement
+\usepackage[binary-units]{siunitx}
+
+
+% Quotations
+
+\usepackage[]{csquotes}
+
+
+%%% Major typographical decisions
+
+\usepackage{parskip}    % skip line for paragraphs instead of indent
+
+
+
+%%% Typographical tweaks
+
+\usepackage{booktabs}               % Nicer hlines (\midrule) in tables
+\usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
+
+
+%%% Bibliography
+
+\usepackage[
+    backend=bibtex,
+    % use date like "Apr. 7, 2017" instead of American "04/07/2017"
+    urldate=long,
+    % use only initials of given names
+    firstinits=true,
+    % leave citations in the order they appear in the text
+    %sorting=none,
+]{biblatex}
+
+\addbibresource{sources.bib}
+% Bib names last-first
+\DeclareNameAlias{sortname}{last-first}
+\DeclareNameAlias{default}{last-first}
+% Bib names small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
+
+
+
+%%% TODO notes
+
+\usepackage[obeyFinal]{todonotes}
+\ifoptionfinal{}{
+    \setlength{\marginparwidth}{2.5cm}
+}
+
+
+
+%%% ↑↑↑ Hyperref unaware packages above this line ↑↑↑ %%%%
+
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+%
+% However, other packages are aware of hyperref and ask to be declared AFTER it.
+
+% Link URLs in the PDF, and link references within the PDF itself
+\usepackage[
+    % Do not style links at all.
+    hidelinks,
+    % Mark links with color (instead of the default pastel boxes)
+    %   Set color to a period (.) to not change color
+    %colorlinks,
+    % Specific colors
+    linkcolor=.,
+    anchorcolor=.,
+    citecolor=.,
+    menucolor=.,
+    runcolor=.,
+    urlcolor=blue,
+    %allcolors=red,
+    %% PDF options:
+    % Use doc title metadata for PDF title metadata
+    pdfusetitle,
+    % Display document title instead of filename in title bar
+    pdfdisplaydoctitle,
+    % use section numbers in PDF index
+    bookmarksnumbered,
+    % Default view: show outline
+    pdfpagemode={UseOutlines},
+    % Default view: Fit height of page to PDF viewer window
+    pdfstartview={FitV},
+]{hyperref}
+
+%%% ↓↓↓ Hyperref aware packages below this line ↓↓↓ %%%%
+
+
+
+% Combined references (chapters 1, 2 and 3)
+\usepackage{cleveref}
+
+% Glossaries
+\usepackage[toc]{glossaries}
+\makeglossaries
+
+% Glossary entries
+\input{glossary}
+% Emphasize first use of glossary term
+%\defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}
+% Disable glossary hyperlinks
+%\glsdisablehyper

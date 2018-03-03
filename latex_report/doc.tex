@@ -1,0 +1,45 @@
+\documentclass[
+    usenglish,
+    a4paper,
+    %final,
+]{article}
+
+\input{packages.tex}
+\input{doc-gen-meta.tex}
+\input{macros-general.tex}
+
+\input{macros-doc.tex}
+
+\title{
+    DOCUMENT TITLE
+}
+\author{
+    ME
+    \and YOU
+    \and THE OTHER GUY
+}
+\date{\today}
+
+\gdef\GitUrl{\url{https://github.com/sleepymurph/project-templates}}
+
+
+\begin{document}
+
+\maketitle
+
+\documenthistory
+
+\input{doc-content.tex}
+
+\printglossaries
+
+\printbibliography[]
+
+\listoftodos
+
+\draftonlysection{Scratchpad}
+{
+    \input{scratchpad.tex}
+}
+
+\end{document}
