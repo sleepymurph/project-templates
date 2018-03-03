@@ -45,6 +45,19 @@ Give yourself a Vim macro:
 
     :nmap <Buffer> <Leader>p :w \| :!pandoc -o %.pdf %<CR>
 
+### A4 paper
+
+Note that this template insists on A4 paper because I live in Europe.
+This is set by the `papersize: a4` in the YAML header.
+Delete or change that as needed.
+
+If you do change it, note that the Pandoc LaTeX template concatenates `paper` to the `papersize` setting.
+So `papersize: a4` becomes `\documentclass[a4paper]{article}` in the LaTeX.
+So whatever paper size you use, you need to leave the `paper` part off of the
+`papersize` option.
+
+Remembering exactly how to set this is probably the biggest reason I
+need this template.
 
 
 LaTeX Report Template
