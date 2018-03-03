@@ -12,6 +12,10 @@ import socketserver
 import sys
 import threading
 
+#=================================================================
+# Command-Line Argument Parsing
+#
+
 def parse_args():
     PORT_DEFAULT = 8000
     DIE_AFTER_SECONDS_DEFAULT = 20 * 60
@@ -39,9 +43,9 @@ def parse_args():
     return parser.parse_args()
 
 
-class ThreadingHttpServer(http.server.HTTPServer, socketserver.ThreadingMixIn):
-    pass
-
+#=================================================================
+# HTTP Request Handler
+#
 
 class HttpRequestHandler(http.server.BaseHTTPRequestHandler):
 
@@ -66,6 +70,15 @@ class HttpRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         self.send_whole_response(404, "Unknown path: " + self.path)
+
+
+
+#=================================================================
+# HTTP Server
+#
+
+class ThreadingHttpServer(http.server.HTTPServer, socketserver.ThreadingMixIn):
+    pass
 
 
 def run_http_server(args):
@@ -119,6 +132,10 @@ def run_http_server(args):
         logging.warn("Reached %.3f second timeout.", args.die_after_seconds)
         shutdown_server_with_grace_period()
 
+
+#=================================================================
+# Main
+#
 
 if __name__ == "__main__":
     args = parse_args()
