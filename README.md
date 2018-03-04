@@ -22,6 +22,18 @@ It took me a long time to put all of that together.
 So I wanted to save it somewhere where I could find it and reuse it when needed.
 
 
+Why Not a Module?
+--------------------------------------------------
+
+Confession: I haven't bothered to learn about Python's packaging tools or ecosystem.
+Python's "batteries-included" standard library usually gets me where I need to go.
+
+I could probably package this up into a little microframework,
+or better yet just use an existing REST framework like Bottle or Flask.
+But since I often adapt this code into something to hand out to students,
+I would rather be able to hand out one file that just runs.
+
+
 Markdown Document For Printing
 ==================================================
 
@@ -44,6 +56,10 @@ To use:
 Give yourself a Vim macro:
 
     :nmap <Buffer> <Leader>p :w \| :!pandoc -o %.pdf %<CR>
+
+
+Notes
+--------------------------------------------------
 
 ### A4 paper
 
@@ -140,7 +156,23 @@ To base a new document off of this skeleton:
 6. Edit any other files as needed
 
 
-## Files
+Why Not a Package?
+--------------------------------------------------
+
+Because I have barely scratched the surface of TeX/LaTeX and I definitely
+don't know enough about how packaging works.
+
+I've also had experience with a custom LaTeX document class that did too much.
+It brought in so many packages that it clashed with many of the packages I tried to use,
+which added another layer of difficulty to working with the document.
+
+This is the nice and lazy way for now:
+copy my usual customizations,
+but then tweak them as needed for each individual document.
+
+
+Files
+--------------------------------------------------
 
 ```
 Document skeleton:
@@ -165,7 +197,8 @@ Build process and helpers:
 ```
 
 
-## Important Notes
+Notes
+--------------------------------------------------
 
 ### Structure: sources in subdirectory, rendered PDF committed in top level of repository
 
