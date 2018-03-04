@@ -17,15 +17,21 @@ import threading
 #
 
 def parse_args():
-    PORT_DEFAULT = 8000
+    PORT_DEFAULT = None
     DIE_AFTER_SECONDS_DEFAULT = 20 * 60
     SHUTDOWN_GRACE_PERIOD_DEFAULT = 2
     LOG_LEVEL_DEFAULT = "INFO"
 
     parser = argparse.ArgumentParser(prog=__file__)
 
-    parser.add_argument("-p", "--port", type=int, default=PORT_DEFAULT,
-            help="port number to listen on, default %d" % PORT_DEFAULT)
+    porthelp = "Port number to listen on."
+    if PORT_DEFAULT:
+        portkwargs = { "default": PORT_DEFAULT,
+                "help": porthelp + " Default: {}".format(PORT_DEFAULT) }
+    else:
+        portkwargs = { "required": True,
+                "help": porthelp + " Required." }
+    parser.add_argument("-p", "--port", type=int, **portkwargs)
 
     parser.add_argument("--die-after-seconds", type=float,
             default=DIE_AFTER_SECONDS_DEFAULT,
