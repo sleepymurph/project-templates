@@ -55,10 +55,10 @@
 }
 
 % Marking feedback
-\newcommand{\feedback}[1]{\todo[color=blue!40]{Feedback: #1}}
-\newcommand{\feedbackinline}[1]{\todo[color=blue!40,inline]{Feedback: #1}}
-\newcommand{\ask}[1]{\todo[color=violet!40]{Ask: #1}}
-\newcommand{\askinline}[1]{\todo[color=violet!40,inline]{Ask: #1}}
+\newcommandx{\feedback}[3][1={Feedback},2={},usedefault]{%
+    \todo[color=blue!40,#2]{#1: #3}}
+\newcommandx{\ask}[3][1=\relax,2={},usedefault]{%
+    \todo[color=violet!40,#2]{Ask #1: #3}}
 
 
 

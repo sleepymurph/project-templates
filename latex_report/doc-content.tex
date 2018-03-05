@@ -42,17 +42,19 @@ or change it to \lstinline{written} to leave a record in place.
 
 \written{Mention idea Y}
 
-Use \lstinline{ask}
-\ask{Does this work?}
-or \lstinline{askinline} to add notes where you need to specifically ask for feedback.
+Normal todos are in orange.
+\todo{Example todo}
 
-\askinline{Is this alright?}
+Use \lstinline{ask} to add notes where you need to specifically ask for feedback.
+\ask{Question for collaborator}
+\ask[Mr. X]{Question for Mr. X}
+\ask[][inline]{Question with additional options passed to \lstinline{todo}, e.g. \lstinline{inline}}
 
-Use \lstinline{feedback}
-\feedback{Could be punchier?}
-or \lstinline{feedbackinline} to add places where someone has given you specific feedback.
+Use \lstinline{feedback} to add notes where someone has given you feedback.
+\feedback{Some feedback here}
+\feedback[Mr. X]{Some feedback from Mr. X}
+\feedback[][inline]{Some feedback with additional options passed to \lstinline{todo}, e.g. \lstinline{inline}}
 
-\feedbackinline{This is ok}
 
 
 \subsection{Shortcuts for Specific Units of Measurement}
