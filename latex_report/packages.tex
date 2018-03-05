@@ -1,13 +1,24 @@
-% File input
+%======================================================================
+% Input encoding
+%
+
 \usepackage[utf8]{inputenc}
 
+
+%======================================================================
 % Programming
+%
 
 % Make it easier to define new commands with optional arguments (\newcommandx)
 \usepackage{xargs}
 
+% Let us check for draft/final conditions
+\usepackage{ifdraft}
 
+
+%======================================================================
 % Fonts
+%
 
 % Times New Roman (text and math)
 %\usepackage{mathptm}
@@ -18,18 +29,25 @@
 %\usepackage[defaultsans]{opensans}
 
 
+%======================================================================
 % Page layout
+%
 
 % Adjust margins from the default.
 % About 4.3cm seems close to the default when you don't use geometry
 % \usepackage[margin=4.3cm]{geometry}
 
 
-% Let us check for draft/final conditions
-\usepackage{ifdraft}
+%======================================================================
+% Major typographical decisions
+%
+
+\usepackage{parskip}    % skip line for paragraphs instead of indent
 
 
+%======================================================================
 % Figures
+%
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage[margin=1cm,justification=centering]{caption}
@@ -43,33 +61,27 @@
 }
 
 
+%======================================================================
 % Listings
+%
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
 
 
-% Numbers and units of measurement
-\usepackage[binary-units]{siunitx}
+%======================================================================
+% Typographical tweaks
+%
+
+% Nicer hlines (\midrule) in tables
+\usepackage{booktabs}
+
+% Compact inline lists with enumerate*
+\usepackage[inline]{enumitem}
 
 
-% Quotations
-
-\usepackage[]{csquotes}
-
-
-%%% Major typographical decisions
-
-\usepackage{parskip}    % skip line for paragraphs instead of indent
-
-
-
-%%% Typographical tweaks
-
-\usepackage{booktabs}               % Nicer hlines (\midrule) in tables
-\usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
-
-
-%%% Bibliography
+%======================================================================
+% Bibliography
+%
 
 \usepackage[
     backend=bibtex,
@@ -89,25 +101,43 @@
 \renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
 
 
-
-%%% TODO notes
+%======================================================================
+% TODO notes
+%
 
 \usepackage[obeyFinal]{todonotes}
-\ifoptionfinal{}{
+\ifoptionfinal{%
+    %nothing
+}{
     \setlength{\marginparwidth}{2.5cm}
 }
 
 
+%======================================================================
+% Other document features (hyperref unaware)
+%
 
-%%% ↑↑↑ Hyperref unaware packages above this line ↑↑↑ %%%%
+% Numbers and units of measurement
+\usepackage[binary-units]{siunitx}
 
+
+% Quotations
+\usepackage[]{csquotes}
+
+
+%======================================================================
+% Hyperref
+%
+% Link URLs in the PDF, and link references within the PDF itself
+%
+% ↑↑↑ Hyperref unaware packages above this line ↑↑↑
+%
 % The hyperref docs recommend declaring it after the other \usepackage
 % declarations, because it has to redefine several commands to work properly,
 % and other later redefinitions might interfere.
 %
 % However, other packages are aware of hyperref and ask to be declared AFTER it.
 
-% Link URLs in the PDF, and link references within the PDF itself
 \usepackage[
     % Do not style links at all.
     hidelinks,
@@ -135,9 +165,14 @@
     pdfstartview={FitV},
 ]{hyperref}
 
-%%% ↓↓↓ Hyperref aware packages below this line ↓↓↓ %%%%
+%
+% ↓↓↓ Hyperref aware packages below this line ↓↓↓
+%======================================================================
 
 
+%======================================================================
+% Other document features (hyperref aware)
+%
 
 % Combined references (chapters 1, 2 and 3)
 \usepackage{cleveref}
