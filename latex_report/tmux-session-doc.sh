@@ -11,7 +11,7 @@ browser() {
 }
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
-GIT_ROOT_DIR="$(git rev-parse --show-toplevel)"
+GIT_ROOT_DIR="$(cd $SCRIPT_DIR && git rev-parse --show-toplevel)"
 
 
 # -------------------------------------------
