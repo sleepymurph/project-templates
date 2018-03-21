@@ -11,35 +11,57 @@ browser() {
 }
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+GIT_ROOT_DIR="$(git rev-parse --show-toplevel)"
 
+
+# -------------------------------------------
 # ↓↓↓ Set project-specific variables here ↓↓↓
 
 SESSION_NAME="latex"
-WINDOW_NAME="latex"
-REPO_URL="https://github.com/sleepymurph/project-templates"
+SESSION_DIR="$SCRIPT_DIR"
 
-# ↑↑↑ --- ↑↑↑
+WINDOW_0_NAME="$SESSION_NAME"
+WINDOW_0_DIR="$SESSION_DIR"
 
-# Set start directory for whole session
-cd "$SCRIPT_DIR"
+# ↑↑↑ ----------------------------------- ↑↑↑
+# -------------------------------------------
+
 
 # start tmux session
-tmux new-session -d -s "$SESSION_NAME" -n "$WINDOW_NAME"
+cd "$SESSION_DIR"
+tmux new-session -d -s "$SESSION_NAME" -n "$WINDOW_0_NAME"
 tmux select-window -t "$SESSION_NAME:0"
+tmux send-keys "cd \"$WINDOW_0_DIR\"" C-m
 
-# Launch web pages and documents
-browser_new_window "$REPO_URL"
-xdg-open "doc.pdf"
 
-# ↓↓↓ Customize here ↓↓↓
+# ------------------------------------------
+# ↓↓↓ Customize session and windows here ↓↓↓
 
-# In first window
+browser_new_window "https://github.com/sleepymurph/project-templates"
+xdg-open "$SCRIPT_DIR/doc.pdf"
+
+# In window 0 ($WINDOW_0_DIR)
 tmux send-keys 'vim -O doc-content.tex sources.bib' C-m
 
-# ↑↑↑ --- ↑↑↑
+# Open a new window with an elaborate vim tab/window layout
+#tmux new-window -n "window_1" -c "window_1_dir/"
+#tmux send-keys "vim doc.tex \
+#    -c 'vsplit doc-content.tex' \
+#    -c 'tabnew lecture-schedule.tex' \
+#    -c 'botright split special-weeks.tsv' \
+#    -c 'botright split lecture-schedule.tsv' \
+#    -c 'exe \"normal 2\\<C-W>k\" | vsplit format_schedule.py' \
+#    " C-m
+
+# Link window from another session
+#tmux link-window -d -s "dao:todo"
+
+# ↑↑↑ ---------------------------------- ↑↑↑
+# ------------------------------------------
+
 
 # back to the beginning
-tmux select-window -t ':0'
+tmux select-window -t "$SESSION_NAME:0"
 
 # finally attach client
 tmux attach-session
