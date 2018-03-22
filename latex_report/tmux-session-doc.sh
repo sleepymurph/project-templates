@@ -10,7 +10,7 @@ browser() {
     chromium-browser "$1"
 }
 
-SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" | xargs readlink -f)"
 GIT_ROOT_DIR="$(cd $SCRIPT_DIR && git rev-parse --show-toplevel)"
 
 
