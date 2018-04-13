@@ -3,6 +3,33 @@
 % One day I'll figure out how to write proper TeX packages.
 %
 
+
+%======================================================================
+% On 'draft' and 'final'
+%
+% There are actually four states of draft and final:
+%
+%   - no marker:    ambiguous
+%   - draft:        definitely draft
+%   - final:        definitely final
+%   - both markers: usually decided by which marker comes last (see doc for 'ifdraft')
+%
+% The question is what to do when there is no marker.
+%
+% This Stack Overflow answer is a good list of draft/final behavior in various
+% packages: https://tex.stackexchange.com/a/49369
+%
+% I prefer to write with hyperref on and todonotes both turned on.
+%
+%   - Hyperref turns off with the draft marker, but stays on with no marker.
+%   - Todonotes with the 'obeyFinal' option does the same.
+%
+% So general strategy is to treat no marker as the default writing mode, with
+% draft output. These macros reflect that. They will hide draft-like content
+% only if the 'final' marker is used.
+%
+
+
 %======================================================================
 % List environments with tighter spacing
 %
@@ -34,32 +61,65 @@
 % Built on: todonotes
 %
 
-% towrite / written
-% Write points that need to be made in a "towrite", then change to "written"
-% when its done.
-% Add `final` to the document to disable all.
+% To-Write, points that should be written into the text
 \newcommand\towrite[1]{
     \todo[inline,color=white,bordercolor=white]{\textcolor{blue}{Write: #1}}
 }
-\newcommand\written[1]{%
-    \ifoptionfinal{}{
-        {
-            \setlength{\parindent}{0em}
-            \par
-            \vspace{.5em}
-            \textcolor{gray}{Written: #1}
-            \vspace{.5em}
-            \par
-        }
-    }
-}
 
-% Marking feedback
+% Feedback, a note with feedback from a reviewer
 \newcommandx{\feedback}[3][1={Feedback},2={},usedefault]{%
     \todo[color=blue!40,#2]{#1: #3}}
+
+% Ask, make a note to ask a reviewer about a specific issue
 \newcommandx{\ask}[3][1=\relax,2={},usedefault]{%
     \todo[color=violet!40,#2]{Ask #1: #3}}
 
+
+
+%======================================================================
+% TODO-like notes that are not actually tasks
+%
+% This is for todo-like annotations that do not represent tasks to be done, but
+% that are still useful to leave as in-document comments while in non-final
+% mode.
+%
+% Examples: finished todos, general guidance, notes to reviewers
+%
+% These should stick to the margin, where they will have less impact on length
+% and flow of the document.
+%
+
+\newcommandx*{\pseudotodo}[2][1={.},usedefault]{
+    \ifoptionfinal{%
+        % nothing
+    }{{%
+        \marginpar{
+            \leavevmode\color{#1}%
+            \rule{\linewidth}{0.4pt}
+            \small{#2}
+        }
+    }}%
+}
+
+% draft note, a note to self or reviewers when checking the draft
+\newcommand*{\draftnote}[1]{%
+    \pseudotodo{#1}
+}
+
+% guidance, advice to follow when writing section or paragraph
+\newcommand*{\guidance}[1]{%
+    \pseudotodo[black!050]{\textsc{#1}}
+}
+
+% outline, to mark main points and flow of document
+\newcommand*{\outline}[1]{%
+    \pseudotodo[blue!080]{#1}
+}
+
+
+
+% Place the following line in document to disable all pseudo-todos
+%\renewcommandx*{\pseudotodo}[2][1={.},usedefault]{}
 
 
 %======================================================================
@@ -70,6 +130,38 @@
 \newcommand{\gib}{\gibi\byte}
 \newcommand{\mib}{\mebi\byte}
 \newcommand{\kib}{\kibi\byte}
+
+
+
+%======================================================================
+% Scratch text
+%
+% Built on: ifdraft
+%
+% This is to block out big blocks of text for deletion, but to keep it around
+% to mine for clips.
+%
+
+\newlength{\intomarginwidth}
+\addtolength{\intomarginwidth}{\linewidth}
+\addtolength{\intomarginwidth}{\marginparsep}
+\addtolength{\intomarginwidth}{\marginparwidth}
+
+\newcommandx{\scratch}[2][1={Scratch},usedefault]{%
+    \ifoptionfinal{%
+        % nothing
+    }{{%
+        \leavevmode\color{black!030}%
+        \rule{\intomarginwidth}{0.4pt}
+        \if\relax\detokenize{#1}\relax%
+            %nothing
+        \else%
+            \marginpar{\small{\textsc{#1}}}
+        \fi%
+        #2
+        \rule{\intomarginwidth}{0.4pt}
+    }}%
+}
 
 
 
@@ -88,22 +180,17 @@
 % then the content will completely disappear.
 %
 
+% DEPRECATED. Use scratch instead
 \newcommand{\draftonlysection}[2]{
-    \ifoptionfinal{%nothing
-    }{
+    \ifoptionfinal{%
+        %nothing
+    }{{%
         \section*{#1 (draft only)}
 
         #2
 
         \textbf{*** This section will not be present in the final version of the document ***}
-    }
-}
-
-\newcommand{\draftonlynote}[1]{
-    \ifoptionfinal{%nothing
-    }{
-        DRAFT ONLY NOTE: #1
-    }
+    }}%
 }
 
 
@@ -133,8 +220,8 @@
     \draftonlysection{Document Version and History}
     {
         Document date: \GitAuthorDate \\
-        Git source version: \texttt{\GitAbrHash}
-        \ifnum \GitNumDirty > 0
+        Git source version: \texttt{\GitAbrHash}%
+        \ifnum \GitNumDirty > 0%
             , \space plus uncommitted changes to \GitNumDirty \space files
         \fi
 
@@ -148,3 +235,10 @@
     }
 
 }
+
+
+%======================================================================
+% Deprecated
+\newcommand*{\written}[1]{\outline{#1}}
+\newcommand*{\draftonlynote}[1]{\scratch[]{#1}}
+\newcommand*{\draftonlymargin}[1]{\draftnote{#1}}

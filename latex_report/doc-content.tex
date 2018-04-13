@@ -35,12 +35,14 @@ Shortcut to create a \lstinline{mailto:} href, \lstinline{\emailhref}:
 I have defined a few shortcuts for styled todo notes:
 
 Use \lstinline{towrite} as a placeholder for paragraphs you intend to write.
-When you've written it, you can delete the \lstinline{towrite} note,
-or change it to \lstinline{written} to leave a record in place.
+When you've written it, you can delete the \lstinline{towrite} note.
+You can also use \lstinline{outline} for outline markers you want to keep around in draft.
 
-\towrite{Mention idea X}
+\outline{Idea X}
+\towrite{Explain idea X}
+\outline{Idea Y}
+\towrite{Explain idea Y}
 
-\written{Mention idea Y}
 
 Normal todos are in orange.
 \todo{Example todo}
@@ -57,6 +59,22 @@ Use \lstinline{feedback} to add notes where someone has given you feedback.
 
 
 
+\subsection{TODO-Like Notes that Are Not Listed as Tasks}
+
+These are macros for notes that annotate the draft of the document,
+but are not listed as tasks that need to be taken care of.
+
+\draftnote{This is where we demonstrate the draft note}
+Use \lstinline{draftnote} for miscellaneous notes.
+
+\guidance{Be sure to include examples of each type here}
+Use \lstinline{guidance} for general advice and reminders for this section.
+
+\outline{Example 1}
+Use \lstinline{outline} for to mark the outline of the document.
+
+
+
 \subsection{Shortcuts for Specific Units of Measurement}
 
 Base-2 data sizes:
@@ -66,14 +84,22 @@ and
 \lstinline{gib} (\SI{2}{\gib}).
 
 
+
 \subsection{Draft-Only Content}
 
 There is \lstinline{draftonlysection} for an entire section that should not be present in the \lstinline{final} version of the document.
-Examples of that are the version information and the scratchpad.
+Examples of that are the version information.
 
-There is also \lstinline{draftonlynote} for short notes that should disappear that are not TODOs.
+Use \lstinline{scratch} to block off text that is on its way to being deleted.
+The \lstinline{scratch} macro takes an optional first argument to explain the deletion.
 
-\draftonlynote{This will disappear when the document is marked \lstinline{final}.}
+\scratch[This is an example of text that will be omitted in final]{
+
+Imagine this is a previous version of the paragraph.
+We are temporarily keeping it around for comparison.
+
+}
+
 
 
 \section{Diagrams with Graphviz}
