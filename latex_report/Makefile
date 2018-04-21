@@ -2,42 +2,73 @@
 # Document-specific variables
 #
 
-# The built PDF will be copied to the parent directory with this name
-FINAL_NAME=latex_report.pdf
+# Default target
+default: doc.pdf
 
-# Graphviz: Files to include with each dot file
-DOT_INCLUDE=diagram_common.m4.dot
-# Graphviz: Diagrams to build and include in document
-DOT_DIAGRAMS=diagram_example.pdf
+# Basename of current directory
+DIR_NAME=$(notdir $(shell pwd))
+
+# The document name when using the "render" target
+DOC_NAME=$(DIR_NAME)
+
+# Document dependencies, typically the diagrams
+DOC_DEPS=\
+    diagram_example.pdf \
+
 
 # Git: List of directories that should be included when listing the Git history
 DOC_SOURCE_DIRS=.
 
+# Graphviz: Files to include with each dot file
+DOT_INCLUDE=diagram_common.m4.dot
+
 
 #======================================================================
-# The main document
+# Specific rules for this document
 #
 
-default: ../$(FINAL_NAME)
-
-../$(FINAL_NAME): \
-    doc.pdf \
-
-	cp doc.pdf ../$(FINAL_NAME)
 
 
-doc.pdf: \
+#======================================================================
+# Convenience targets
+#
+
+# Render draft and final PDFs in parent dir
+render: clean doc.pdf doc-final.pdf
+	cp doc.pdf ../$(DOC_NAME)-draft.pdf
+	cp doc-final.pdf ../$(DOC_NAME)-final.pdf
+
+# A version of the PDF in final mode
+final: doc-final.pdf
+
+# Clean by removing all git-ignored files
+clean:
+	git clean -fX .
+
+
+#======================================================================
+# LaTeX
+#
+
+TEX_DEPS=\
     *.tex \
     sources.bib \
     doc-gen-meta.tex \
     doc-git-log.txt \
-    $(DOT_DIAGRAMS) \
+    $(DOC_DEPS) \
 
-	pdflatex doc.tex
-	bibtex doc.aux
-	makeglossaries doc
-	pdflatex doc.tex
-	pdflatex doc.tex
+
+%.pdf: %.tex $(TEX_DEPS)
+
+	pdflatex $*.tex
+	bibtex $*.aux
+	makeglossaries $*
+	pdflatex $*.tex
+	pdflatex $*.tex
+
+# Generate a version of the doc in final mode
+%-final.tex: %.tex
+	sed 's/%final/final/' $*.tex > $*-final.tex
 
 
 #======================================================================
@@ -53,6 +84,7 @@ doc.pdf: \
     %.gpi \
 
 	gnuplot -e 'set terminal svg size 480,360' $*.gpi > $*.svg
+
 
 #======================================================================
 # Diagrams with Graphviz
