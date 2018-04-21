@@ -13,6 +13,7 @@ DOC_NAME=$(DIR_NAME)
 
 # Document dependencies, typically the diagrams
 DOC_DEPS=\
+    abstract.txt \
     diagram_example.pdf \
 
 

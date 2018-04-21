@@ -3,6 +3,7 @@
 %
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 
 %======================================================================
@@ -53,6 +54,13 @@
 \usepackage[margin=1cm,justification=centering]{caption}
 \usepackage{subcaption} % sub-figures
 
+%\usepackage{tikz}
+%\usetikzlibrary{graphs}
+%\usetikzlibrary{shapes}
+%\usetikzlibrary{arrows}
+
+%\usepackage{adjustbox}
+
 % Move all images to the end of the document in draft mode
 \ifoptionfinal
 {
@@ -66,6 +74,8 @@
 %
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+% Don't panic on curly quotes that sneak into listings
+\lstset{literate={’}{{'}}1}
 
 
 %======================================================================
@@ -77,6 +87,11 @@
 
 % Compact inline lists with enumerate*
 \usepackage[inline]{enumitem}
+
+% Smart quotes
+% Provides \enquote command
+\usepackage [strict=true]{csquotes}
+%\MakeOuterQuote{"}  % Automatically treat quoted strings as quotes
 
 
 %======================================================================
@@ -90,7 +105,7 @@
     % use only initials of given names
     firstinits=true,
     % leave citations in the order they appear in the text
-    %sorting=none,
+    sorting=none,
 ]{biblatex}
 
 \addbibresource{sources.bib}
@@ -190,3 +205,6 @@
 %\defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}
 % Disable glossary hyperlinks
 %\glsdisablehyper
+
+% Author affiliations
+\usepackage{authblk}
