@@ -13,7 +13,6 @@ DOC_NAME=$(DIR_NAME)
 
 # Document dependencies, typically the diagrams
 DOC_DEPS=\
-    abstract.txt \
     diagram_example.pdf \
 
 
@@ -53,6 +52,7 @@ clean:
 
 TEX_DEPS=\
     *.tex \
+    $(shell ls abstract.txt 2>/dev/null) \
     sources.bib \
     doc-gen-meta.tex \
     doc-git-log.txt \
