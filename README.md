@@ -126,34 +126,41 @@ and I have not had a chance to figure that out.
 TODO: Figure out how to get Open Sans with `xelatex` too.
 
 
-LaTeX Report Template
+LaTeX Article Template
 ==================================================
 
-Subdirectory: `latex_report`
+Subdirectory: `latex-article`
 
-This is a starter LaTeX report with a ton of customizations that I use
+This is a starter LaTeX article with a ton of customizations that I use
 consistently.
 
 This is for more serious documents where Markdown+Pandoc won't cut it.
 
-## Basic Usage
+Basic Usage
+--------------------------------------------------
 
 The build process is controlled by `make`. To build:
 
-1. `cd` into subdirectory
-2. run `make`
+1. `cd` into subdirectory.
+2. Run `make` to compile `doc.pdf` in LaTeX's `draft` mode
+3. Run `make final` to compile `doc-final.pdf` in LaTeX's `final` mode
+4. Run `make render` to compile both draft and final versions, then copy them to the parent directory as `latex-article-draft.pdf` and `latex-article-final.pdf`, respectively.
 
-This will create a `report_latex.pdf` document in the parent directory
-(root of the repository).
+The idea here is to be able
+to rapidly generate and view the document as you work on it
+(`latex-article/doc.pdf` and `latex-article/doc-final.pdf`),
+then at stopping points,
+to commit rendered versions of the document for easier sharing with collaborators
+(`latex-article-draft.pdf` and `latex-article-final.pdf`).
 
 To base a new document off of this skeleton:
 
-1. Copy the `report_latex` directory into your project and rename it
-2. Don't forget the hidden `.gitignore` file
-3. Edit the Makefile to change the name of the final document
-4. Change the title, author, and git URL in `doc.tex`
-5. Write the document contents in `doc-content.tex`
-6. Edit any other files as needed
+1. Copy the `latex-article` directory into your project and rename it.
+    The rendered PDF names `latex-article-draft.pdf` and `latex-article-final.pdf` are taken from the subdirectory name, so they will change when you rename the subdirectory.
+2. Don't forget to copy the hidden `.gitignore` file.
+3. Change the title, author, and git URL in `doc.tex`
+4. Write the document contents in `doc-content.tex`
+5. Edit any other files as needed
 
 
 Why Not a Package?
@@ -184,16 +191,17 @@ Document skeleton:
 Document content:
 
     doc-content.tex     Place for document contents
+    abstract.txt        Abstract (plain text)
     macros-doc.tex      Place for document-specific macros
-    glossary.tex        Place for glossary entries
     sources.bib         Bibliography database
-    scratchpad.tex      Place for scratch text that might get reused
+    glossary.tex        Place for glossary entries
 
 Build process and helpers:
 
     Makefile            Build process
     gen_meta_tex.sh     Script that extracts Git information
     .gitignore          Generated files for Git to ignore (TeX generates a lot of them)
+    tmux-session-doc.sh Script to launch a tmux session for this document
 ```
 
 
@@ -205,12 +213,23 @@ Notes
 I keep my LaTeX sources in Git, naturally.
 I keep the document source in a subdirectory of the repository,
 and then I commit a rendered copy of the PDF in the top level of the repository
-(see [`latex_report.pdf`](latex_report.pdf) in this repo).
+(see
+[`latex-article-draft.pdf`](latex-article-draft.pdf) and
+[`latex-article-final.pdf`](latex-article-final.pdf)
+in this repo).
 
 This comes from collaboration.
 I want my collaborators to be able to look at the latest version of the
 document directly from the repository without having to set up the LaTeX build
 environment.
+
+
+### Abstract in plain text
+
+The abstract for the document comes from `abstract.txt`.
+This file is deliberately in plain text so that it will be easier to copy-and-paste the abstract text elsewhere, without having to worry about TeX escapes for common characters like `%` and `&`.
+If you do not need an abstract at all, simply delete the file, and the template will skip the abstract section entirely.
+
 
 ### Dependency: Open Sans
 
@@ -229,19 +248,15 @@ Or you can use a different font by editing the `packages.tex` file.
 The font packages are near the top.
 
 
-
 ### The "final" option
 
 This template is set up to obey the `final` option in the `\documentclass`.
 There are many draft-only notes, annotations, and even sections that will
 disappear when `final` is added.
 
-I even define a few custom macros for draft-only (non-`final`) content:
+I even define a several custom macros for draft-only (non-`final`) content.
+See `macros-general.tex` for their definitions and `doc-content-example.tex` for examples of their use.
 
-- `\draftonlysection`: a whole section that will only appear in non-final mode.
-    Examples are the Git version information and the scratchpad.
-
-- `\draftonlynote`: a snippet of text that will only appear in non-final mode.
 
 ### US English, A4 paper
 
@@ -255,6 +270,7 @@ If you need to change that, find it at the top of `doc.tex`.
 There may be a few more Europe-friendly tweaks to my styles.
 For example, I set the `biblatex` package to print dates like "Apr. 7, 2017"
 instead of the "04/07/2017" to avoid any possible confusion over MDY vs DMY.
+
 
 ### Graphviz Diagrams
 
@@ -273,6 +289,7 @@ To use Graphviz:
         DOT_DIAGRAMS=diagram_example.pdf
 
 3. Create a figure in the document
+
 
 ### M4 preprocessing for Graphviz diagrams
 
