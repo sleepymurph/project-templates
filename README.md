@@ -163,6 +163,28 @@ To base a new document off of this skeleton:
 5. Edit any other files as needed
 
 
+
+Running in a Docker container
+--------------------------------------------------
+
+This directory also includes a Dockerfile to set up a build environment.
+To build the document inside a Docker container, run
+
+    ./docker_make.sh [MAKE TARGETS]
+
+See `Dockerfile` for dependencies and `docker_make` for Docker invocations.
+
+This will create a docker image named after the document subdirectory,
+in this case `latex-article`.
+
+To remove the image (change the name to match the subdirectory name):
+
+    docker rmi latex-article
+
+Then you can remove dangling resources with a command like `docker system prune`.
+See the [How to Remove Docker Images, Containers, and Volumes](https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes) tutorial from Digital Ocean for more cleanup commands.
+
+
 Why Not a Package?
 --------------------------------------------------
 
