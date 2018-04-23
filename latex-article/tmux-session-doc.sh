@@ -41,7 +41,7 @@ browser_new_window "https://github.com/sleepymurph/project-templates"
 xdg-open "$SCRIPT_DIR/doc.pdf"
 
 # In window 0 ($WINDOW_0_DIR)
-tmux send-keys 'vim -O doc-content.tex sources.bib' C-m
+tmux send-keys 'vim -O doc.tex doc-content.tex' C-m
 
 # Open a new window with an elaborate vim tab/window layout
 #tmux new-window -n "window_1" -c "window_1_dir/"
