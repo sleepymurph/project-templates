@@ -38,7 +38,7 @@ tmux send-keys "cd \"$WINDOW_0_DIR\"" C-m
 # ↓↓↓ Customize session and windows here ↓↓↓
 
 browser_new_window "https://github.com/sleepymurph/project-templates"
-xdg-open "$SCRIPT_DIR/doc.pdf"
+xdg-open "$SCRIPT_DIR/doc.pdf" &> /dev/null
 
 # In window 0 ($WINDOW_0_DIR)
 tmux send-keys 'vim -O doc.tex doc-content.tex' C-m
