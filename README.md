@@ -153,6 +153,8 @@ then at stopping points,
 to commit rendered versions of the document for easier sharing with collaborators
 (`latex-article-draft.pdf` and `latex-article-final.pdf`).
 
+See the [README file in the subdirectory](latex-article/) for details.
+
 To base a new document off of this skeleton:
 
 1. Copy the `latex-article` directory into your project and rename it.
@@ -183,6 +185,8 @@ To remove the image (change the name to match the subdirectory name):
 
 Then you can remove dangling resources with a command like `docker system prune`.
 See the [How to Remove Docker Images, Containers, and Volumes](https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes) tutorial from Digital Ocean for more cleanup commands.
+
+See the [README file in the subdirectory](latex-article/) for details about the build process.
 
 
 Why Not a Package?
