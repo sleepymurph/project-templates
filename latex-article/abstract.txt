@@ -1,6 +1,0 @@
-Example abstract.
-
-The abstract is in a separate plain text file, to make it easier to extract and
-paste into other places.
-
-If you don't need an abstract, just delete the file.

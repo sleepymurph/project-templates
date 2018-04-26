@@ -1,4 +1,0 @@
-digraph{
-    hello -> world [TENTATIVE]
-    world -> "!" [TENTATIVE]
-}
